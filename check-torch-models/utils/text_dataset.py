@@ -4,10 +4,11 @@ from torch.utils.data import Dataset
 
 class TextDataset(Dataset):
     """Класс для преобразования датасета к нужному формату"""
-    def __init__(self, X, y, tokenizer):
+    def __init__(self, X, y, tokenizer, max_len=512):
         self.tokenizer = tokenizer
         self.sentences = X['text'].tolist()
         self.labels = y['target_list'].tolist()
+        self.max_len = max_len
 
     def __len__(self):
         return len(self.sentences)
@@ -19,6 +20,7 @@ class TextDataset(Dataset):
         inputs = self.tokenizer.encode_plus(
             text=text,
             add_special_tokens=True, # добавление спец-токенов, отвечающих за "начало предложения" [CLS] и "конец предложения" [SEP]
+            max_length=self.max_len,
             padding='max_length',
             truncation=True,
             return_token_type_ids=False, # это для задачи вопросно-ответной системы, т.е. не для нас
