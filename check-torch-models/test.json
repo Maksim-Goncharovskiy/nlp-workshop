@@ -1,0 +1,4 @@
+{
+	"model_name": "tiny_rubert",
+	"model_hugging_face_name": "cointegrated/rubert-tiny"
+}
